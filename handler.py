@@ -12,7 +12,7 @@ def sendEmail(event, context):
     url = 'https://api.stackexchange.com/2.2/search?order=desc&sort=votes&intitle=' + hakusana + '&site=stackoverflow'
     r = requests.get(url)
     data = r.json()
-
+    message = "Vittu mita bugista paskaa. Eihan tama saatana edes buildaa!"
     #for d in sorted():
     #print(str(data))
     try:
@@ -30,7 +30,7 @@ def sendEmail(event, context):
         #print(lista[0])
         message = lista[0]
     except:
-        message = "Vittu mitä bugista paskaa. Eihän tämä saatana edes buildaa!"
+        message = "Vittu mita bugista paskaa. Eihan tama saatana edes buildaa!"
     client = boto3.client('ses' ) 
     client.send_email(
         Destination={
