@@ -27,6 +27,8 @@ def sendEmail(event, context):
         lista.append(s.text)
     #print(lista[0])
 
+    message = lista[0]
+
     client = boto3.client('ses' ) 
     client.send_email(
         Destination={
@@ -37,7 +39,7 @@ def sendEmail(event, context):
                 
                 'Text': {
                     'Charset': 'UTF-8',
-                    'Data': lista[0],
+                    'Data': message,
                 },
             },
             'Subject': {
