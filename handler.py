@@ -26,7 +26,6 @@ def sendEmail(event, context):
         #print(s.text)
         lista.append(s.text)
     #print(lista[0])
-
     message = lista[0]
 
     client = boto3.client('ses' ) 
@@ -50,7 +49,7 @@ def sendEmail(event, context):
         Source=source,
     )
 
-    return lista[0]
+    return message
 
     #var = re.search(r"(text\">\n<p>)(.*)(<\/p>)", str(soup))
     #print(var.group(2))

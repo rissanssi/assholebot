@@ -1,4 +1,4 @@
-
+service: anssijalauri-using-ses
 
 provider:
   name: aws
