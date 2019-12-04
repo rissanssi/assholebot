@@ -17,20 +17,20 @@ def sendEmail(event, context):
     #print(str(data))
     try:
         haku2 = (data['items'][0]['link'])
+    
+        #print(haku2)
+
+        http = urllib3.PoolManager()
+        news = http.request('GET', haku2)
+        soup = BeautifulSoup(news.data, 'html.parser')
+        lista = []
+        for s in soup.find_all(attrs={"class": "answercell post-layout--right"}):
+            #print(s.text)
+            lista.append(s.text)
+        #print(lista[0])
+        message = lista[0]
     except:
-        haku2 = "Vittu mitä bugista paskaa. Eihän tämä saatana edes buildaa!"
-    #print(haku2)
-
-    http = urllib3.PoolManager()
-    news = http.request('GET', haku2)
-    soup = BeautifulSoup(news.data, 'html.parser')
-    lista = []
-    for s in soup.find_all(attrs={"class": "answercell post-layout--right"}):
-        #print(s.text)
-        lista.append(s.text)
-    #print(lista[0])
-    message = lista[0]
-
+        message = "Vittu mitä bugista paskaa. Eihän tämä saatana edes buildaa!"
     client = boto3.client('ses' ) 
     client.send_email(
         Destination={
