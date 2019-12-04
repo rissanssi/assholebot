@@ -15,7 +15,10 @@ def sendEmail(event, context):
 
     #for d in sorted():
     #print(str(data))
-    haku2 = (data['items'][0]['link'])
+    try:
+        haku2 = (data['items'][0]['link'])
+    except:
+        haku2 = "Vittu mitä bugista paskaa. Eihän tämä saatana edes buildaa!"
     #print(haku2)
 
     http = urllib3.PoolManager()
