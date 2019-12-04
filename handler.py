@@ -1,11 +1,14 @@
 import urllib3
 from bs4 import BeautifulSoup
+import boto3
 import re
 from botocore.vendored import requests
 
 def sendEmail(event, context):
     data = event['body']
     hakusana = data['hakusana']
+    source = data['source']
+    destination = data['destination']
     url = 'https://api.stackexchange.com/2.2/search?order=desc&sort=votes&intitle=' + hakusana + '&site=stackoverflow'
     r = requests.get(url)
     data = r.json()
@@ -23,6 +26,28 @@ def sendEmail(event, context):
         #print(s.text)
         lista.append(s.text)
     #print(lista[0])
+
+    client = boto3.client('ses' ) 
+    client.send_email(
+        Destination={
+            'ToAddresses': [destination]
+            },
+        Message={
+            'Body': {
+                
+                'Text': {
+                    'Charset': 'UTF-8',
+                    'Data': lista[0],
+                },
+            },
+            'Subject': {
+                'Charset': 'UTF-8',
+                'Data': "Hanki osaaminen.",
+            },
+        },
+        Source=source,
+    )
+
     return lista[0]
 
     #var = re.search(r"(text\">\n<p>)(.*)(<\/p>)", str(soup))
