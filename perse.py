@@ -36,7 +36,7 @@ def lambda_handler(data, context):
             'Content-Type': 'application/json',
         }
 
-        postidata = "{\"hakusana\":\"" + text + "\",\"source\":\"larepro999@gmail.com\",\"destination\":\"larepro999@gmail.com\"}"
+        postidata = "{\"hakusana\":\"" + text + "\",\"source\":\"esimerkki@esimerkki.com\",\"destination\":\"esimerkki@esimerkki.com\"}"
 
         response = requests.post('https://him63n2rxk.execute-api.eu-west-1.amazonaws.com/dev/send-email', headers=headers, data=postidata)
 
